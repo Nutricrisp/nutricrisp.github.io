@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriCrisp | Nutrición Deportiva Inclusiva y Premium</title>
+    <!-- Google Fonts: Poppins de alta definición -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome para Iconos de alta definición -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel para compilar JSX en el navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                nutriBg: '#FDFBF7', // Fondo Crema Premium
+                oliveDeep: '#13251F', // Verde Oliva Profundo (Más oscuro para contraste ultra nítido)
+                oliveMedium: '#223E35', 
+                oliveLight: '#E6ECE9', 
+                terracotta: '#B64B1F', // Terracota de alto contraste
+                terracottaHover: '#923813'
+              },
+              fontFamily: {
+                sans: ['Poppins', 'sans-serif'],
+              }
+            }
+          }
+        }
+    </script>
+    <style>
+        /* MOTOR DE ULTRA NITIDEZ TIPOGRÁFICA */
+        body, text, p, span, h1, h2, h3, h4, h5, h6, select, input, textarea, button {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-smooth: always;
+        }
+
+        .no-scroll {
+            overflow: hidden;
+        }
+        
+        /* Transición de zoom súper suave para imágenes sin pérdida de foco */
+        .zoom-img {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .zoom-img:hover {
+            transform: scale(1.03);
+        }
+        
+        /* MOTOR DE NITIDEZ DE IMÁGENES PREMIUM (PREVENCIÓN DE PIXELADO) */
+        .img-premium {
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            perspective: 1000;
+            -webkit-perspective: 1000;
+            will-change: transform;
+            
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: high-quality;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        /* EFECTO DE ESTUDIO FOTOGRÁFICO DE LUXE */
+        .img-studio-bg {
+            background: radial-gradient(circle, rgba(255,255,255,1) 50%, rgba(243,240,234,1) 100%);
+            box-shadow: inset 0 0 30px rgba(19, 37, 31, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-nutriBg text-slate-900 antialiased font-sans">
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const PRODUCTOS_DATA = [
+            {
+                id: 1,
+                nombre: 'Barritas Proteicas',
+                presentacion: 'Caja x12 unidades',
+                precio: 35000,
+                categoria: 'snacks',
+                sabores: ['Chocolate', 'Frutos Rojos', 'Coco'],
+                descripcion: 'Alto contenido de proteínas de rápida absorción. Ideal pre y post-entrenamiento.',
+                macros: '15g Proteína | para recargar energía',
+                imagenes: [
+                    'ChatGPT Image 2 jun 2026, 20_44_29.png', 
+                    'ChatGPT Image 2 jun 2026, 20_53_34.png',
+                    'ChatGPT Image 2 jun 2026, 20_55_03.png'
+                ],
+                popular: true
+            },
+            {
+                id: 2,
+                nombre: 'Galletitas Proteicas',
+                precio: 7500,
+                categoria: 'Snacks',
+                sabores: ['Arándano', 'limon', 'Chocolate'],
+                descripcion: 'Snack crocante. Una alternativa deliciosa para recargar energías.',
+                macros: '10g Proteína | Dulces y deliciosos',
+                imagenes: [
+                    'ChatGPT Image 2 jun 2026, 21_53_30.png',
+                    'ChatGPT Image 2 jun 2026, 21_47_35.png',
+                    'ChatGPT Image 2 jun 2026, 21_40_56.png'
+                ],
+                popular: false
+            },
+            {
+                id: 3,
+                nombre: 'Granola Proteica',
+                presentacion: 'Bolsa x1kg',
+                precio: 14000,
+                categoria: 'Desayuno',
+                descripcion: 'Combinación perfecta de copos, frutos secos y proteína vegetal. Extra crunchy.',
+                macros: '12g Proteína | Fibra natural',
+                imagenes: ['ChatGPT Image 2 jun 2026, 22_23_15.png '],
+                popular: true
+            },
+            {
+                id: 4,
+                nombre: 'Muffins',
+                presentacion: 'Pack x6 unidades',
+                precio: 15500,
+                categoria: 'Snacks',
+                 sabores: ['Cafe moka', 'Dulce dde leche', 'Chocolate'],
+                descripcion: 'Esponjosos, húmedos y cargados de nutrientes de alta calidad alimentaria.',
+                macros: '8g Proteína | Endulzado natural',
+                imagenes: [
+                    'ChatGPT Image 2 jun 2026, 22_35_06.png',
+                    'ChatGPT Image 3 jun 2026, 13_04_12.png',
+                    'ChatGPT Image 3 jun 2026, 13_06_22.png'],
+                popular: false
+            },
+            {
+                id: 5,
+                nombre: 'Brownies',
+                presentacion: 'Pack x6 unidades',
+                precio: 13000,
+                categoria: 'Snacks',
+                descripcion: 'El permitido perfecto para chocolate-lovers sin culpa. Textura fudge increíble.',
+                macros: '14g Proteína | Bajo en carbohidratos',
+                imagenes: ['ChatGPT Image 3 jun 2026, 13_16_25.png'],
+                popular: true
+            },
+            {
+                id: 6,
+                nombre: 'Mix Energéticos',
+                presentacion: 'Bolsa x500g',
+                precio: 14000,
+                categoria: 'Desayuno',
+                descripcion: 'Selección de nueces, almendras, castañas y semillas activadas para energía sostenida.',
+                macros: 'Ácidos grasos saludables | Vitaminas',
+                imagenes: ['ChatGPT Image 3 jun 2026, 13_23_09.png'],
+                popular: false
+            }
+        ];
+
+        function ProductCarousel({ imagenes, productNombre, activeIndex, onIndexChange }) {
+            const [localIndex, setLocalIndex] = useState(0);
+            const [touchStart, setTouchStart] = useState(0);
+            const [touchEnd, setTouchEnd] = useState(0);
+
+            useEffect(() => {
+                if (activeIndex !== undefined) {
+                    setLocalIndex(activeIndex);
+                }
+            }, [activeIndex]);
+
+            if (!imagenes || imagenes.length === 0) return null;
+
+            const updateIndex = (newIdx) => {
+                setLocalIndex(newIdx);
+                if (onIndexChange) onIndexChange(newIdx);
+            };
+
+            const nextSlide = (e) => {
+                e.stopPropagation();
+                updateIndex((localIndex + 1) % imagenes.length);
+            };
+
+            const prevSlide = (e) => {
+                e.stopPropagation();
+                updateIndex((localIndex - 1 + imagenes.length) % imagenes.length);
+            };
+
+            const handleTouchStart = (e) => {
+                setTouchStart(e.targetTouches[0].clientX);
+            };
+
+            const handleTouchMove = (e) => {
+                setTouchEnd(e.targetTouches[0].clientX);
+            };
+
+            const handleTouchEnd = () => {
+                if (touchStart - touchEnd > 50) {
+                    nextSlide({ stopPropagation: () => {} });
+                }
+                if (touchStart - touchEnd < -50) {
+                    prevSlide({ stopPropagation: () => {} });
+                }
+            };
+
+            const currentImg = imagenes[localIndex];
+            const isSmallOrPackaging = currentImg.includes('300x300') || currentImg.includes('thumb');
+
+            return (
+                <div 
+                    className="relative w-full aspect-[4/3] sm:aspect-[3/2] overflow-hidden group select-none img-studio-bg border-b border-stone-200/80"
+                    onTouchStart={handleTouchStart}
+                    onTouchMove={handleTouchMove}
+                    onTouchEnd={handleTouchEnd}
+                >
+                    <div className="w-full h-full relative flex items-center justify-center p-4">
+                        <img 
+                            src={currentImg} 
+                            alt={`${productNombre} - sabor ${localIndex + 1}`} 
+                            className={`transition-all duration-700 ease-out img-premium zoom-img ${
+                                isSmallOrPackaging 
+                                ? 'max-h-[85%] max-w-[85%] object-contain' 
+                                : 'w-full h-full object-cover'
+                            }`}
+                            onError={(e) => {
+                                e.target.src = "https://placehold.co/600x400/FDFBF7/1C352D?text=NutriCrisp";
+                            }}
+                        />
+                    </div>
+
+                    {imagenes.length > 1 && (
+                        <>
+                            <button 
+                                onClick={prevSlide}
+                                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/95 hover:bg-white text-oliveDeep w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all active:scale-90 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                            >
+                                <i className="fa-solid fa-chevron-left text-sm"></i>
+                            </button>
+                            <button 
+                                onClick={nextSlide}
+                                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/95 hover:bg-white text-oliveDeep w-10 h-10 rounded-full flex items-center justify-center shadow-lg transition-all active:scale-90 z-10 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                            >
+                                <i className="fa-solid fa-chevron-right text-sm"></i>
+                            </button>
+
+                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                                {imagenes.map((_, idx) => (
+                                    <button
+                                        key={idx}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            updateIndex(idx);
+                                        }}
+                                        className={`h-2 rounded-full transition-all duration-300 ${
+                                            idx === localIndex ? 'bg-terracotta w-6' : 'bg-stone-400/80 hover:bg-white'
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                        </>
+                    )}
+                </div>
+            );
+        }
+
+        function App() {
+            const [cart, setCart] = useState([]);
+            const [isCartOpen, setIsCartOpen] = useState(false);
+            const [selectedCategory, setSelectedCategory] = useState('Todos');
+            const [selectedFlavors, setSelectedFlavors] = useState({}); 
+            const [carouselIndices, setCarouselIndices] = useState({});
+
+            const [checkoutStep, setCheckoutStep] = useState('idle'); 
+            const [customerData, setCustomerData] = useState({
+                nombre: '',
+                email: '',
+                direccion: '',
+                telefono: '',
+                metodoPago: 'Tarjeta de Crédito',
+                tarjetaNumero: '',
+                tarjetaVence: '',
+                tarjetaCvc: ''
+            });
+            const [invoiceNumber, setInvoiceNumber] = useState('');
+            const [orderDate, setOrderDate] = useState('');
+
+            const [contactForm, setContactForm] = useState({ nombre: '', email: '', mensaje: '' });
+            const [contactSubmitted, setContactSubmitted] = useState(false);
+
+            useEffect(() => {
+                const defaultFlavors = {};
+                PRODUCTOS_DATA.forEach(p => {
+                    if (p.sabores && p.sabores.length > 0) {
+                        defaultFlavors[p.id] = p.sabores[0];
+                    }
+                });
+                setSelectedFlavors(defaultFlavors);
+            }, []);
+
+            const handleFlavorChange = (productId, sabor) => {
+                setSelectedFlavors(prev => ({ ...prev, [productId]: sabor }));
+                
+                const producto = PRODUCTOS_DATA.find(p => p.id === productId);
+                if (producto && producto.sabores) {
+                    const idx = producto.sabores.indexOf(sabor);
+                    if (idx !== -1) {
+                        setCarouselIndices(prev => ({ ...prev, [productId]: idx }));
+                    }
+                }
+            };
+
+            const handleAddProduct = (producto) => {
+                const saborSeleccionado = selectedFlavors[producto.id] || null;
+                
+                setCart(prevCart => {
+                    const itemExistente = prevCart.find(item => 
+                        item.id === producto.id && item.sabor === saborSeleccionado
+                    );
+
+                    if (itemExistente) {
+                        return prevCart.map(item => 
+                            (item.id === producto.id && item.sabor === saborSeleccionado)
+                                ? { ...item, cantidad: item.cantidad + 1 }
+                                : item
+                        );
+                    } else {
+                        let imagenAsociada = producto.imagenes[0];
+                        if (producto.sabores && saborSeleccionado) {
+                            const idx = producto.sabores.indexOf(saborSeleccionado);
+                            if (idx !== -1 && producto.imagenes[idx]) {
+                                imagenAsociada = producto.imagenes[idx];
+                            }
+                        }
+
+                        return [...prevCart, {
+                            id: producto.id,
+                            nombre: producto.nombre,
+                            presentacion: producto.presentacion,
+                            precio: producto.precio,
+                            sabor: saborSeleccionado,
+                            imagen: imagenAsociada,
+                            cantidad: 1
+                        }];
+                    }
+                });
+                setIsCartOpen(true);
+            };
+
+            const handleIncrementQty = (id, sabor) => {
+                setCart(prevCart => prevCart.map(item => 
+                    (item.id === id && item.sabor === sabor)
+                        ? { ...item, cantidad: item.cantidad + 1 }
+                        : item
+                ));
+            };
+
+            const handleDecrementQty = (id, sabor) => {
+                setCart(prevCart => {
+                    const item = prevCart.find(i => i.id === id && i.sabor === sabor);
+                    if (item.cantidad === 1) {
+                        return prevCart.filter(i => !(i.id === id && i.sabor === sabor));
+                    }
+                    return prevCart.map(i => 
+                        (i.id === id && i.sabor === sabor) ? { ...i, cantidad: i.cantidad - 1 } : i
+                    );
+                });
+            };
+
+            const handleRemoveItem = (id, sabor) => {
+                setCart(prevCart => prevCart.filter(item => !(item.id === id && item.sabor === sabor)));
+            };
+
+            const totalItemsCount = cart.reduce((acc, item) => acc + item.cantidad, 0);
+            const subtotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+            const costoEnvio = subtotal > 25000 ? 0 : 2500; 
+            const totalCompra = subtotal + costoEnvio;
+
+            const handleStartPurchase = () => {
+                setIsCartOpen(false);
+                setCheckoutStep('form');
+            };
+
+            const handleFormSubmit = (e) => {
+                e.preventDefault();
+                setCheckoutStep('processing');
+                
+                setTimeout(() => {
+                    const numRandom = Math.floor(100000 + Math.random() * 900000);
+                    const hoy = new Date();
+                    const fechaFormateada = hoy.toLocaleDateString('es-AR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    setInvoiceNumber(`NC-2026-${numRandom}`);
+                    setOrderDate(fechaFormateada);
+                    setCheckoutStep('success');
+                }, 2000);
+            };
+
+            const handleFinishProcess = () => {
+                setCart([]);
+                setCheckoutStep('idle');
+                setCustomerData({
+                    nombre: '',
+                    email: '',
+                    direccion: '',
+                    telefono: '',
+                    metodoPago: 'Tarjeta de Crédito',
+                    tarjetaNumero: '',
+                    tarjetaVence: '',
+                    tarjetaCvc: ''
+                });
+            };
+
+            const handleContactChange = (e) => {
+                setContactForm({ ...contactForm, [e.target.name]: e.target.value });
+            };
+
+            const handleContactSubmit = (e) => {
+                e.preventDefault();
+                setContactSubmitted(true);
+                setTimeout(() => {
+                    setContactForm({ nombre: '', email: '', mensaje: '' });
+                }, 4000);
+            };
+
+            const filteredProducts = selectedCategory === 'Todos' 
+                ? PRODUCTOS_DATA 
+                : PRODUCTOS_DATA.filter(p => p.categoria === selectedCategory);
+
+            return (
+                <div className="min-h-screen flex flex-col text-slate-900">
+                    
+                    {/* --- NAVBAR DE NAVEGACIÓN --- */}
+                    <header className="fixed w-full top-0 z-50 bg-white border-b border-stone-200/80 shadow-md">
+                        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
+                            
+                            <a href="#inicio" className="text-2xl font-black tracking-tight text-oliveDeep hover:opacity-90 transition-opacity">
+                                Nutri<span className="text-terracotta">Crisp</span>
+                            </a>
+
+                            <ul className="hidden md:flex space-x-8 items-center text-sm font-bold tracking-wide text-oliveDeep">
+                                <li><a href="#inicio" className="hover:text-terracotta transition-colors py-2 block">Inicio</a></li>
+                                <li><a href="#beneficios" className="hover:text-terracotta transition-colors py-2 block">Beneficios</a></li>
+                                <li><a href="#productos" className="hover:text-terracotta transition-colors py-2 block">Productos</a></li>
+                                <li><a href="#diferencial" className="hover:text-terracotta transition-colors py-2 block">Diferencial</a></li>
+                                <li><a href="#tienda" className="hover:text-terracotta transition-colors py-2 block">Tienda</a></li>
+                                <li><a href="#contacto" className="hover:text-terracotta transition-colors py-2 block">Contacto</a></li>
+                            </ul>
+
+                            <button 
+                                onClick={() => setIsCartOpen(true)}
+                                className="relative bg-oliveDeep hover:bg-oliveMedium text-white p-3.5 rounded-full flex items-center justify-center transition-all shadow-md focus:outline-none focus:ring-2 focus:ring-terracotta"
+                                aria-label="Abrir Carrito"
+                            >
+                                <i className="fa-solid fa-shopping-cart text-xl"></i>
+                                {totalItemsCount > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-terracotta text-white text-xs font-black w-6 h-6 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                                        {totalItemsCount}
+                                    </span>
+                                )}
+                            </button>
+                        </nav>
+                    </header>
+
+                    {/* --- HERO SECTION --- */}
+                    {}
+                    <section 
+                        id="inicio" 
+                        className="relative min-h-screen flex items-center justify-center text-center px-4 sm:px-6 lg:px-8 pt-20"
+                        style={{
+                            backgroundImage: 'linear-gradient(rgba(10, 20, 15, 0.78), rgba(10, 20, 15, 0.78)), url("ChatGPT Image 2 jun 2026, 15_27_15.png")',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center'
+                        }}
+                    >
+                        <div className="max-w-4xl mx-auto space-y-6">
+                            <h1 className="text-4xl sm:text-6xl font-black text-white tracking-tight leading-none">
+                                Alimentá tus metas.<br/><span className="text-terracotta">Superá tus límites.</span>
+                            </h1>
+                            <p className="text-lg sm:text-2xl text-stone-100 max-w-2xl mx-auto font-medium leading-relaxed">
+                                Potenciá tus entrenamientos con alimentos proteicos de alta calidad. Diseñadas para brindar energía limpia, recuperación muscular y una óptima nutrición para tu bienestar.
+                            </p>
+                            <div className="pt-4">
+                                <a 
+                                    href="#tienda" 
+                                    className="inline-block bg-terracotta hover:bg-terracottaHover text-white px-10 py-5 rounded-full font-extrabold text-lg tracking-wide shadow-xl transition-all hover:-translate-y-1 hover:scale-105 active:scale-95"
+                                >
+                                    Descubrir la Tienda <i className="fa-solid fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- SECCIÓN BENEFICIOS --- */}
+                    {}
+                    <section id="beneficios" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+                        <div className="max-w-7xl mx-auto">
+                            <h2 className="text-3xl sm:text-4xl font-black text-center text-oliveDeep mb-3">
+                                ¿Por qué elegir NutriCrisp?
+                            </h2>
+                            <p className="text-slate-800 text-center max-w-2xl mx-auto mb-16 text-lg font-medium">
+                                Nutrición deportiva premium e inteligente basada en ingredientes de origen natural y funcionales, pensada para elevar tu rendimiento sin perder sabor.
+                            </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                                <div className="bg-nutriBg p-8 rounded-2xl border border-stone-200 shadow-md hover:shadow-lg transition-shadow">
+                                    <div className="w-14 h-14 bg-oliveLight text-oliveDeep rounded-xl flex items-center justify-center text-2xl mb-6">
+                                        <i className="fa-solid fa-dumbbell text-terracotta"></i>
+                                    </div>
+                                    <h3 className="text-xl font-extrabold text-oliveDeep mb-3">Alto aporte proteico</h3>
+                                    <p className="text-slate-950 text-base font-semibold leading-relaxed">Favorece la reconstrucción celular de tejidos musculares y estimula el óptimo desarrollo y recuperación post-esfuerzo.</p>
+                                </div>
+
+                                <div className="bg-nutriBg p-8 rounded-2xl border border-stone-200 shadow-md hover:shadow-lg transition-shadow">
+                                    <div className="w-14 h-14 bg-oliveLight text-oliveDeep rounded-xl flex items-center justify-center text-2xl mb-6">
+                                        <i className="fa-solid fa-bolt text-terracotta"></i>
+                                    </div>
+                                    <h3 className="text-xl font-extrabold text-oliveDeep mb-3">Energía para entrenar</h3>
+                                    <p className="text-slate-950 text-base font-semibold leading-relaxed">Carbohidratos complejos y micronutrientes seleccionados que otorgan energía sostenida y evitan picos de insulina.</p>
+                                </div>
+
+                                <div className="bg-nutriBg p-8 rounded-2xl border border-stone-200 shadow-md hover:shadow-lg transition-shadow">
+                                    <div className="w-14 h-14 bg-oliveLight text-oliveDeep rounded-xl flex items-center justify-center text-2xl mb-6">
+                                        <i className="fa-solid fa-wheat-awn-circle-exclamation text-terracotta"></i>
+                                    </div>
+                                    <h3 className="text-xl font-extrabold text-oliveDeep mb-3">Certificación Sin TACC</h3>
+                                    <p className="text-slate-950 text-base font-semibold leading-relaxed">Procesos rigurosos y seguros aptos para personas celíacas o con alta sensibilidad al gluten digestivo.</p>
+                                </div>
+
+                                <div className="bg-nutriBg p-8 rounded-2xl border border-stone-200 shadow-md hover:shadow-lg transition-shadow">
+                                    <div className="w-14 h-14 bg-oliveLight text-oliveDeep rounded-xl flex items-center justify-center text-2xl mb-6">
+                                        <i className="fa-solid fa-person-running text-terracotta"></i>
+                                    </div>
+                                    <h3 className="text-xl font-extrabold text-oliveDeep mb-3">Estilo de vida activo</h3>
+                                    <p className="text-slate-950 text-base font-semibold leading-relaxed">Envases portátiles y prácticos diseñados para acompañarte en tu rutina de entrenamiento y vida en movimiento.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- SECCIÓN ESTADÍSTICAS --- */}
+                    <section className="bg-oliveDeep text-white py-16 px-4 sm:px-6 lg:px-8 border-y-4 border-terracotta">
+                        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-around items-center space-y-12 md:space-y-0 text-center">
+                            <div className="space-y-2">
+                                
+                                <p className="text-stone-100 font-extrabold tracking-widest uppercase text-sm">alto en proteina</p>
+                            </div>
+                            <div className="w-px h-16 bg-stone-700 hidden md:block"></div>
+                            <div className="space-y-2">
+                                <p className="text-6xl font-black text-terracotta">100%</p>
+                                <p className="text-stone-100 font-extrabold tracking-widest uppercase text-sm">Libre de TACC (Gluten-Free)</p>
+                            </div>
+                            <div className="w-px h-16 bg-stone-700 hidden md:block"></div>
+                            <div className="space-y-2">
+                                <p className="text-6xl font-black text-terracotta">0%</p>
+                                <p className="text-stone-100 font-extrabold tracking-widest uppercase text-sm">Azúcares Añadidos</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- SHOWCASE PRODUCTOS --- */}
+                    {}
+                    <section id="productos" className="py-24 px-4 sm:px-6 lg:px-8 bg-stone-100">
+                        <div className="max-w-7xl mx-auto">
+                            <h2 className="text-3xl sm:text-4xl font-black text-center text-oliveDeep mb-3">
+                                Líneas NutriCrisp
+                            </h2>
+                            <p className="text-slate-800 text-center max-w-2xl mx-auto mb-16 text-lg font-medium">
+                                Recetas equilibradas con un perfil de nutrientes insuperable. Deslizá sobre los productos interactivos para ver todas sus presentaciones con máxima nitidez.
+                            </p>
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {PRODUCTOS_DATA.slice(0, 3).map(prod => (
+                                    <div key={prod.id} className="bg-white rounded-3xl overflow-hidden shadow-md border border-stone-200 group hover:shadow-xl transition-all">
+                                        <ProductCarousel 
+                                            imagenes={prod.imagenes} 
+                                            productNombre={prod.nombre} 
+                                            activeIndex={carouselIndices[prod.id]}
+                                            onIndexChange={(idx) => {
+                                                if (prod.sabores && prod.sabores[idx]) {
+                                                    setSelectedFlavors(prev => ({ ...prev, [prod.id]: prod.sabores[idx] }));
+                                                }
+                                            }}
+                                        />
+                                        
+                                        <div className="p-8">
+                                            <h3 className="text-2xl font-black text-oliveDeep mb-2">{prod.nombre}</h3>
+                                            <p className="text-slate-850 text-base font-semibold mb-4 leading-relaxed">{prod.descripcion}</p>
+                                            <div className="flex justify-between items-center pt-4 border-t border-stone-200">
+                                                <span className="text-sm font-black text-terracotta uppercase">{prod.macros}</span>
+                                                <a href="#tienda" className="text-oliveDeep hover:text-terracotta text-base font-black transition-colors flex items-center">
+                                                    Ver Detalles <i className="fa-solid fa-angle-right ml-1"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- NUESTRO DIFERENCIAL --- */}
+                    <section id="diferencial" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+                        <div className="max-w-5xl mx-auto text-center">
+                            <span className="text-terracotta font-black uppercase tracking-widest text-sm block">Compromiso Nutricional</span>
+                            <h2 className="text-3xl sm:text-4xl font-black text-oliveDeep mt-2 mb-8">Nuestro Diferencial</h2>
+                            <div className="bg-nutriBg border-2 border-stone-200 p-8 sm:p-12 rounded-3xl shadow-md text-slate-900 leading-relaxed max-w-4xl mx-auto space-y-6">
+                                <p className="text-xl font-bold leading-relaxed">
+                                    "Mientras muchas barritas deportivas del mercado no consideran las necesidades de personas con restricciones alimentarias, <strong className="text-oliveDeep font-black">NutriCrisp</strong> combina nutrición deportiva de alto rendimiento con fórmulas aptas para personas con celiaquismo y sensibilidad al gluten."
+                                </p>
+                                <p className="text-lg text-slate-850 font-semibold">
+                                    Creemos que el acceso a una alimentación deportiva segura y nutritiva debe estar al alcance de todos, sin sacrificar sabor, calidad ni resultados.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- COMPROMISO SOCIAL / ODS --- */}
+                    <section id="compromiso" className="py-20 px-4 sm:px-6 lg:px-8 bg-stone-50 border-t border-b border-stone-200">
+                        <div className="max-w-7xl mx-auto text-center">
+                            <h2 className="text-3xl font-black text-oliveDeep mb-12">Compromiso con el Bienestar Social</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                                <div className="bg-white p-8 rounded-3xl border border-stone-200 flex flex-col items-center shadow-md hover:shadow-lg transition-shadow">
+                                    <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-2xl text-emerald-800 mb-6 font-black">
+                                        3
+                                    </div>
+                                    <h3 className="text-xl font-extrabold text-oliveDeep mb-2">ODS 3: Salud y Bienestar</h3>
+                                    <p className="text-slate-800 text-base leading-relaxed font-semibold">Promovemos un estilo de vida saludable y activo mediante el acceso a alimentos equilibrados, reduciendo azúcares nocivos y de baja calidad.</p>
+                                </div>
+                                <div className="bg-white p-8 rounded-3xl border border-stone-200 flex flex-col items-center shadow-md hover:shadow-lg transition-shadow">
+                                    <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-2xl text-orange-800 mb-6 font-black">
+                                        10
+                                    </div>
+                                    <h3 className="text-xl font-extrabold text-oliveDeep mb-2">ODS 10: Reducción de las Desigualdades</h3>
+                                    <p className="text-slate-800 text-base leading-relaxed font-semibold">Incentivamos la inclusión alimentaria en la comunidad deportiva, asegurando opciones seguras para deportistas con celiaquismo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- TIENDA ONLINE --- */}
+                    {}
+                    <section id="tienda" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+                        <div className="max-w-7xl mx-auto">
+                            <h2 className="text-3xl sm:text-4xl font-black text-center text-oliveDeep mb-3">
+                                Tienda Online
+                            </h2>
+                            <p className="text-slate-850 text-center max-w-2xl mx-auto mb-12 text-lg font-semibold">
+                                Armá tu combo diario NutriCrisp. Deslizá sobre la imagen del producto para ver las diferentes variedades y sabores disponibles.
+                            </p>
+
+                            {/* Filtros de Categoría */}
+                            <div className="flex justify-center flex-wrap gap-3 mb-12">
+                                {['Todos', 'Snacks', 'Desayuno'].map(cat => (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setSelectedCategory(cat)}
+                                        className={`px-6 py-3 rounded-full text-base font-black tracking-wide transition-all ${
+                                            selectedCategory === cat
+                                                ? 'bg-oliveDeep text-white shadow-md scale-105'
+                                                : 'bg-stone-100 text-slate-800 hover:bg-stone-200'
+                                        }`}
+                                    >
+                                        {cat}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Grilla de productos de la Tienda */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                {filteredProducts.map(prod => (
+                                    <div key={prod.id} className="bg-nutriBg rounded-3xl overflow-hidden border border-stone-200 shadow-md flex flex-col justify-between hover:shadow-lg transition-all">
+                                        
+                                        <div className="relative bg-white">
+                                            <ProductCarousel 
+                                                imagenes={prod.imagenes} 
+                                                productNombre={prod.nombre} 
+                                                activeIndex={carouselIndices[prod.id]}
+                                                onIndexChange={(idx) => {
+                                                    if (prod.sabores && prod.sabores[idx]) {
+                                                        setSelectedFlavors(prev => ({ ...prev, [prod.id]: prod.sabores[idx] }));
+                                                    }
+                                                }}
+                                            />
+                                            {prod.popular && (
+                                                <span className="absolute top-4 left-4 bg-terracotta text-white px-3.5 py-1.5 text-xs font-black uppercase rounded-full shadow-md z-20">
+                                                    Más Vendido
+                                                </span>
+                                            )}
+                                            {prod.imagenes.length > 1 && (
+                                                <span className="absolute top-4 right-4 bg-oliveDeep/90 backdrop-blur-sm text-white px-3 py-1 text-[11px] font-black rounded-full shadow z-20 flex items-center gap-1.5">
+                                                    <i className="fa-solid fa-hand-pointer animate-pulse"></i> Deslizar sabor
+                                                </span>
+                                            )}
+                                        </div>
+
+                                        <div className="p-6 flex-grow flex flex-col justify-between">
+                                            <div>
+                                                <div className="flex justify-between items-start mb-3 gap-2">
+                                                    <h3 className="text-xl font-black text-oliveDeep leading-tight">{prod.nombre}</h3>
+                                                    <span className="bg-stone-200 text-slate-900 px-2.5 py-1 text-xs font-bold rounded flex-shrink-0">
+                                                        {prod.presentacion}
+                                                    </span>
+                                                </div>
+                                                <p className="text-slate-800 text-base font-semibold mb-4 leading-relaxed">{prod.descripcion}</p>
+                                                
+                                                <p className="text-xs font-black text-oliveMedium uppercase mb-5 tracking-wider flex items-center">
+                                                    <i className="fa-solid fa-square-check text-terracotta mr-1.5 text-lg"></i>{prod.macros}
+                                                </p>
+                                            </div>
+
+                                            <div>
+                                                {/* Selector de Sabores */}
+                                                {prod.sabores && prod.sabores.length > 0 && (
+                                                    <div className="mb-5">
+                                                        <label className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wide">Elegí un sabor:</label>
+                                                        <select
+                                                            value={selectedFlavors[prod.id] || ''}
+                                                            onChange={(e) => handleFlavorChange(prod.id, e.target.value)}
+                                                            className="w-full bg-white border-2 border-stone-300 rounded-xl p-3 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-oliveDeep focus:border-oliveDeep font-bold shadow-sm"
+                                                        >
+                                                            {prod.sabores.map(sab => (
+                                                                <option key={sab} value={sab}>{sab}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                )}
+
+                                                <div className="flex justify-between items-center pt-4 border-t border-stone-200">
+                                                    <div>
+                                                        <span className="text-xs text-slate-600 block font-bold uppercase leading-none">Precio</span>
+                                                        <span className="text-2xl font-black text-oliveDeep">${prod.precio.toLocaleString('es-AR')}</span>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => handleAddProduct(prod)}
+                                                        className="bg-terracotta hover:bg-terracottaHover text-white px-6 py-3.5 rounded-xl font-black text-sm tracking-wide transition-all flex items-center gap-2 shadow active:scale-95 hover:scale-105"
+                                                    >
+                                                        <i className="fa-solid fa-cart-plus"></i> Agregar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* --- SECCIÓN CONTACTO --- */}
+                    {}
+                    <section id="contacto" className="py-24 px-4 sm:px-6 lg:px-8 bg-oliveLight">
+                        <div className="max-w-3xl mx-auto bg-white p-8 sm:p-12 rounded-3xl border border-stone-200 shadow-md text-center">
+                            <h2 className="text-3xl font-black text-oliveDeep mb-2">Escribinos</h2>
+                            <p className="text-slate-800 mb-8 text-lg font-semibold">¿Tenés dudas sobre nuestros productos o envíos? Mandanos un mensaje.</p>
+                            
+                            {contactSubmitted ? (
+                                <div className="p-8 bg-emerald-50 text-emerald-950 rounded-2xl border-2 border-emerald-300 text-center animate-fade-in">
+                                    <i className="fa-solid fa-circle-check text-4xl mb-4 text-emerald-600"></i>
+                                    <h3 className="text-2xl font-black mb-2">¡Mensaje Enviado con Éxito!</h3>
+                                    <p className="text-base font-semibold leading-relaxed">Gracias por contactarte con NutriCrisp. Te responderemos a tu correo electrónico a la brevedad.</p>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleContactSubmit} className="space-y-5 text-left">
+                                    <div>
+                                        <label className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wide">Nombre Completo</label>
+                                        <input 
+                                            type="text" 
+                                            name="nombre"
+                                            required
+                                            value={contactForm.nombre}
+                                            onChange={handleContactChange}
+                                            placeholder="Tu nombre completo" 
+                                            className="w-full bg-stone-50 border-2 border-stone-200 rounded-xl p-4 text-slate-900 text-base font-medium focus:outline-none focus:ring-2 focus:ring-oliveDeep focus:border-oliveDeep"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wide">Correo Electrónico</label>
+                                        <input 
+                                            type="email" 
+                                            name="email"
+                                            required
+                                            value={contactForm.email}
+                                            onChange={handleContactChange}
+                                            placeholder="ejemplo@gmail.com" 
+                                            className="w-full bg-stone-50 border-2 border-stone-200 rounded-xl p-4 text-slate-900 text-base font-medium focus:outline-none focus:ring-2 focus:ring-oliveDeep focus:border-oliveDeep"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="block text-xs font-black text-slate-900 mb-1.5 uppercase tracking-wide">Mensaje</label>
+                                        <textarea 
+                                            name="mensaje"
+                                            required
+                                            rows="4"
+                                            value={contactForm.mensaje}
+                                            onChange={handleContactChange}
+                                            placeholder="¿En qué podemos ayudarte?" 
+                                            className="w-full bg-stone-50 border-2 border-stone-200 rounded-xl p-4 text-slate-900 text-base font-medium focus:outline-none focus:ring-2 focus:ring-oliveDeep focus:border-oliveDeep"
+                                        ></textarea>
+                                    </div>
+                                    <button 
+                                        type="submit" 
+                                        className="w-full bg-oliveDeep hover:bg-oliveMedium text-white py-4 rounded-xl font-black tracking-wide transition-all uppercase text-sm mt-4 shadow-md active:scale-95"
+                                    >
+                                        Enviar Mensaje
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+                    </section>
+
+                    {/* --- FOOTER --- */}
+                    <footer className="bg-oliveDeep text-white border-t border-stone-800 py-12 px-4 sm:px-6 lg:px-8 text-center">
+                        <div className="max-w-7xl mx-auto space-y-6">
+                            <h3 className="text-2xl font-black text-white tracking-tight">Nutri<span className="text-terracotta">Crisp</span></h3>
+                            <p className="text-stone-300 text-base max-w-md mx-auto font-medium leading-relaxed">Nutrición deportiva premium, inclusiva y libre de gluten para atletas exigentes.</p>
+                            <div className="flex justify-center space-x-6 text-2xl text-stone-300">
+                                <a href="#" className="hover:text-terracotta transition-colors" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
+                                <a href="#" className="hover:text-terracotta transition-colors" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
+                                <a href="#" className="hover:text-terracotta transition-colors" aria-label="Email"><i className="fa-regular fa-envelope"></i></a>
+                            </div>
+                            <div className="pt-8 border-t border-stone-800 text-stone-400 text-sm font-medium">
+                                <p>© 2026 NutriCrisp | Nutrición deportiva inclusiva. Todos los derechos reservados.</p>
+                            </div>
+                        </div>
+                    </footer>
+
+
+                    {/* --- SIDEBAR LATERAL DE CARRITO --- */}
+                    {}
+                    {isCartOpen && (
+                        <div className="fixed inset-0 z-50 overflow-hidden">
+                            <div 
+                                onClick={() => setIsCartOpen(false)}
+                                className="absolute inset-0 bg-stone-900/60 backdrop-blur-sm transition-opacity"
+                            ></div>
+                            
+                            <div className="absolute inset-y-0 right-0 max-w-full flex">
+                                <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between">
+                                    
+                                    <div className="p-6 border-b border-stone-200 flex justify-between items-center bg-stone-50">
+                                        <h3 className="text-xl font-black text-oliveDeep"><i className="fa-solid fa-shopping-cart mr-2 text-terracotta"></i>Tu Carrito</h3>
+                                        <button 
+                                            onClick={() => setIsCartOpen(false)}
+                                            className="text-slate-900 hover:text-black p-2 focus:outline-none"
+                                            aria-label="Cerrar Carrito"
+                                        >
+                                            <i className="fa-solid fa-xmark text-2xl"></i>
+                                        </button>
+                                    </div>
+
+                                    <div className="flex-grow p-6 overflow-y-auto space-y-4">
+                                        {cart.length === 0 ? (
+                                            <div className="text-center py-20 text-slate-800">
+                                                <i className="fa-solid fa-basket-shopping text-5xl mb-4 text-stone-300"></i>
+                                                <p className="font-extrabold text-lg">Tu carrito está vacío.</p>
+                                                <button 
+                                                    onClick={() => setIsCartOpen(false)}
+                                                    className="mt-4 text-terracotta font-black text-base underline hover:text-terracottaHover"
+                                                >
+                                                    Explorar productos
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            cart.map((item, idx) => {
+                                                const isSmallPackaging = item.imagen.includes('300x300') || item.imagen.includes('thumb');
+                                                return (
+                                                    <div key={idx} className="flex gap-4 p-3 border-2 border-stone-100 rounded-xl bg-stone-50">
+                                                        <div className="w-16 h-16 bg-white border border-stone-200 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
+                                                            <img 
+                                                                src={item.imagen} 
+                                                                alt={item.nombre} 
+                                                                className={`img-premium ${
+                                                                    isSmallPackaging 
+                                                                    ? 'max-h-[90%] max-w-[90%] object-contain' 
+                                                                    : 'w-full h-full object-cover'
+                                                                }`} 
+                                                            />
+                                                        </div>
+                                                        <div className="flex-grow">
+                                                            <div className="flex justify-between items-start">
+                                                                <h4 className="font-black text-slate-900 text-sm leading-tight">{item.nombre}</h4>
+                                                                <button 
+                                                                    onClick={() => handleRemoveItem(item.id, item.sabor)}
+                                                                    className="text-slate-600 hover:text-red-700 transition-colors p-1"
+                                                                    aria-label="Eliminar item"
+                                                                >
+                                                                    <i className="fa-regular fa-trash-can text-base"></i>
+                                                                </button>
+                                                            </div>
+                                                            {item.sabor && (
+                                                                <p className="text-xs text-terracotta font-black mb-1">Sabor: {item.sabor}</p>
+                                                            )}
+                                                            <p className="text-xs text-slate-700 font-bold mb-2">{item.presentacion}</p>
+                                                            
+                                                            <div className="flex justify-between items-center">
+                                                                <div className="flex items-center border-2 border-stone-300 rounded bg-white font-black">
+                                                                    <button 
+                                                                        onClick={() => handleDecrementQty(item.id, item.sabor)}
+                                                                        className="px-2.5 py-1 text-slate-800 hover:bg-stone-100 rounded-l"
+                                                                    >
+                                                                        -
+                                                                    </button>
+                                                                    <span className="px-3 text-sm font-black text-slate-900">{item.cantidad}</span>
+                                                                    <button 
+                                                                        onClick={() => handleIncrementQty(item.id, item.sabor)}
+                                                                        className="px-2.5 py-1 text-slate-800 hover:bg-stone-100 rounded-r"
+                                                                    >
+                                                                        +
+                                                                    </button>
+                                                                </div>
+                                                                <span className="text-base font-black text-slate-900">${(item.precio * item.cantidad).toLocaleString('es-AR')}</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })
+                                        )}
+                                    </div>
+
+                                    {cart.length > 0 && (
+                                        <div className="p-6 border-t border-stone-200 bg-stone-50 space-y-4">
+                                            <div className="space-y-1.5 text-base text-slate-900 font-bold">
+                                                <div className="flex justify-between">
+                                                    <span>Subtotal:</span>
+                                                    <span className="font-black text-slate-950">${subtotal.toLocaleString('es-AR')}</span>
+                                                </div>
+                                                <div className="flex justify-between">
+                                                    <span>Envío:</span>
+                                                    <span className="font-black text-slate-950">
+                                                        {costoEnvio === 0 ? <span className="text-emerald-800">¡Bonificado!</span> : `$${costoEnvio.toLocaleString('es-AR')}`}
+                                                    </span>
+                                                </div>
+                                                {costoEnvio > 0 && (
+                                                    <p className="text-xs text-slate-600 italic text-right font-semibold">Sumá ${(25000 - subtotal).toLocaleString('es-AR')} más para envío gratis.</p>
+                                                )}
+                                                <div className="flex justify-between text-lg font-black text-oliveDeep pt-2 border-t border-stone-200">
+                                                    <span>Total estimado:</span>
+                                                    <span>${totalCompra.toLocaleString('es-AR')}</span>
+                                                </div>
+                                            </div>
+
+                                            <button 
+                                                onClick={handleStartPurchase}
+                                                className="w-full bg-terracotta hover:bg-terracottaHover text-white py-4 rounded-xl font-black tracking-wide transition-all uppercase text-base shadow-md flex items-center justify-center gap-2 hover:scale-102"
+                                            >
+                                                Iniciar Compra <i className="fa-solid fa-angle-right text-lg"></i>
+                                            </button>
+                                        </div>
+                                    )}
+
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+
+                    {/* --- MODAL DE CHECKOUT COMPLETO Y FACTURACIÓN ELECTRÓNICA SIMULADA --- */}
+                    {}
+                    {checkoutStep !== 'idle' && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
+                            <div className="fixed inset-0 bg-stone-900/60 backdrop-blur-sm animate-fade-in"></div>
+
+                            <div className="relative bg-white w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl z-10 border border-stone-200">
+                                
+                                {checkoutStep !== 'success' && (
+                                    <div className="p-6 border-b border-stone-200 flex justify-between items-center bg-stone-50">
+                                        <h3 className="text-xl font-black text-oliveDeep">Finalizar Compra</h3>
+                                        {checkoutStep === 'form' && (
+                                            <button 
+                                                onClick={() => setCheckoutStep('idle')}
+                                                className="text-slate-900 hover:text-black p-1"
+                                                aria-label="Cerrar formulario"
+                                            >
+                                                <i className="fa-solid fa-xmark text-2xl"></i>
+                                            </button>
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* PASO 1: FORMULARIO INTERNO DE CHECKOUT */}
+                                {checkoutStep === 'form' && (
+                                    <form onSubmit={handleFormSubmit} className="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-left">
+                                        <h4 className="text-xs font-black text-oliveDeep uppercase tracking-wider mb-2">Datos de Entrega</h4>
+                                        
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs font-black text-slate-900 mb-1">Nombre Completo</label>
+                                                <input 
+                                                    type="text" 
+                                                    required
+                                                    value={customerData.nombre}
+                                                    onChange={(e) => setCustomerData({...customerData, nombre: e.target.value})}
+                                                    placeholder="Juan Pérez" 
+                                                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-lg p-2.5 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-oliveDeep"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-black text-slate-900 mb-1">Email (Gmail de preferencia)</label>
+                                                <input 
+                                                    type="email" 
+                                                    required
+                                                    value={customerData.email}
+                                                    onChange={(e) => setCustomerData({...customerData, email: e.target.value})}
+                                                    placeholder="juan.perez@gmail.com" 
+                                                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-lg p-2.5 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-oliveDeep"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs font-black text-slate-900 mb-1">Dirección de Envío</label>
+                                                <input 
+                                                    type="text" 
+                                                    required
+                                                    value={customerData.direccion}
+                                                    onChange={(e) => setCustomerData({...customerData, direccion: e.target.value})}
+                                                    placeholder="Av. Colón 1234, Córdoba" 
+                                                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-lg p-2.5 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-oliveDeep"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-black text-slate-900 mb-1">Teléfono de Contacto</label>
+                                                <input 
+                                                    type="tel" 
+                                                    required
+                                                    value={customerData.telefono}
+                                                    onChange={(e) => setCustomerData({...customerData, telefono: e.target.value})}
+                                                    placeholder="+54 9 351 123456" 
+                                                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-lg p-2.5 text-slate-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-oliveDeep"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <h4 className="text-xs font-black text-oliveDeep uppercase tracking-wider pt-4 border-t border-stone-100 mb-2">Pago Electrónico Simulado</h4>
+                                        
+                                        <div>
+                                            <label className="block text-xs font-black text-slate-900 mb-1">Método de Pago</label>
+                                            <div className="flex gap-4">
+                                                {['Tarjeta de Crédito', 'Tarjeta de Débito'].map(m => (
+                                                    <label key={m} className="flex items-center gap-2 text-sm text-slate-900 font-bold cursor-pointer">
+                                                        <input 
+                                                            type="radio" 
+                                                            name="metodoPago"
+                                                            checked={customerData.metodoPago === m}
+                                                            onChange={() => setCustomerData({...customerData, metodoPago: m})}
+                                                            className="text-oliveDeep focus:ring-oliveDeep h-4 w-4"
+                                                        />
+                                                        {m}
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="block text-xs font-black text-slate-900 mb-1">Número de Tarjeta</label>
+                                            <input 
+                                                type="text" 
+                                                required
+                                                maxLength="19"
+                                                value={customerData.tarjetaNumero}
+                                                onChange={(e) => setCustomerData({...customerData, tarjetaNumero: e.target.value.replace(/\s?/g, '').replace(/(\d{4})/g, '$1 ').trim()})}
+                                                placeholder="4517 8492 0192 4810" 
+                                                className="w-full bg-stone-50 border-2 border-stone-200 rounded-lg p-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-oliveDeep font-mono font-bold text-center"
+                                            />
+                                        </div>
+
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs font-black text-slate-900 mb-1">Vencimiento</label>
+                                                <input 
+                                                    type="text" 
+                                                    required
+                                                    maxLength="5"
+                                                    value={customerData.tarjetaVence}
+                                                    onChange={(e) => setCustomerData({...customerData, tarjetaVence: e.target.value})}
+                                                    placeholder="MM/AA" 
+                                                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-lg p-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-oliveDeep font-mono font-bold text-center"
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-black text-slate-900 mb-1">CVC</label>
+                                                <input 
+                                                    type="password" 
+                                                    required
+                                                    maxLength="3"
+                                                    value={customerData.tarjetaCvc}
+                                                    onChange={(e) => setCustomerData({...customerData, tarjetaCvc: e.target.value})}
+                                                    placeholder="123" 
+                                                    className="w-full bg-stone-50 border-2 border-stone-200 rounded-lg p-2.5 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-oliveDeep font-mono font-bold text-center"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="bg-stone-50 p-4 rounded-xl border border-stone-200 text-xs text-slate-800 space-y-1.5 font-semibold">
+                                            <div className="flex justify-between text-slate-950 text-sm font-bold">
+                                                <span>Total a debitar:</span>
+                                                <span className="text-base font-black text-oliveDeep">${totalCompra.toLocaleString('es-AR')}</span>
+                                            </div>
+                                            <p className="italic font-medium">Este es un entorno seguro de testeo y simulación para NutriCrisp.</p>
+                                        </div>
+
+                                        <button 
+                                            type="submit"
+                                            className="w-full bg-terracotta hover:bg-terracottaHover text-white py-4 rounded-xl font-black tracking-wide transition-all uppercase text-sm mt-4 shadow-md flex items-center justify-center gap-2 active:scale-95"
+                                        >
+                                            <i className="fa-solid fa-lock text-sm"></i> Confirmar Pago e Iniciar Compra
+                                        </button>
+                                    </form>
+                                )}
+
+                                {/* PASO 2: PROCESANDO PAGO */}
+                                {checkoutStep === 'processing' && (
+                                    <div className="p-16 text-center space-y-6">
+                                        <div className="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-terracotta"></div>
+                                        <h3 className="text-xl font-black text-oliveDeep">Procesando Pago Seguro...</h3>
+                                        <p className="text-sm text-slate-800 font-semibold max-w-xs mx-auto leading-relaxed">Estamos validando los datos con la pasarela bancaria. Esto demorará unos instantes.</p>
+                                    </div>
+                                )}
+
+                                {/* PASO 3: FACTURA DIGITAL / ÉXITO */}
+                                {checkoutStep === 'success' && (
+                                    <div className="max-h-[85vh] overflow-y-auto">
+                                        
+                                        <div className="bg-emerald-900 text-white p-8 text-center space-y-2">
+                                            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center text-3xl mx-auto mb-2 text-white animate-bounce">
+                                                <i className="fa-solid fa-circle-check text-4xl"></i>
+                                            </div>
+                                            <h2 className="text-2xl font-black tracking-tight">¡Compra Exitosa!</h2>
+                                            <p className="text-base text-stone-100 font-semibold max-w-sm mx-auto leading-relaxed">Tu transacción fue confirmada de manera electrónica.</p>
+                                        </div>
+
+                                        <div className="p-6 space-y-6">
+                                            
+                                            <div className="p-4 bg-emerald-50 text-emerald-950 rounded-xl border-2 border-emerald-200 text-sm flex items-start gap-3 font-semibold leading-relaxed">
+                                                <i className="fa-solid fa-envelope-open text-lg text-emerald-700 mt-0.5"></i>
+                                                <div>
+                                                    <strong className="font-black">Notificación de envío:</strong> Se ha despachado automáticamente un correo detallando la factura oficial e información logística a tu Gmail: <strong className="font-black underline">{customerData.email}</strong>.
+                                                </div>
+                                            </div>
+
+                                            {/* Diseño de Factura Oficial de Alto Contraste */}
+                                            <div className="border-2 border-stone-300 rounded-2xl p-6 bg-white space-y-6 text-sm text-slate-900 font-mono relative overflow-hidden shadow-sm">
+                                                
+                                                <div className="flex justify-between items-start pb-4 border-b-2 border-stone-200">
+                                                    <div>
+                                                        <h3 className="text-lg font-black text-oliveDeep font-sans leading-none mb-1">NutriCrisp S.A.</h3>
+                                                        <p className="font-bold">CUIT: 30-74839201-9</p>
+                                                        <p className="font-bold">Dirección: Av. Colón 1200, Córdoba, AR</p>
+                                                        <p className="font-bold">Soporte: ventas@nutricrisp.com</p>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <span className="bg-slate-900 text-white px-2.5 py-1 rounded text-xs font-black">FACTURA B</span>
+                                                        <p className="mt-3 font-black text-oliveDeep text-base leading-none">{invoiceNumber}</p>
+                                                        <p className="font-bold">Fecha: {orderDate}</p>
+                                                    </div>
+                                                </div>
+
+                                                <div className="space-y-1.5 border-b-2 border-stone-200 pb-4">
+                                                    <p className="font-black text-slate-950 font-sans uppercase text-xs tracking-wider">Cliente / Destinatario</p>
+                                                    <p className="font-bold"><strong className="font-black text-slate-950">Nombre:</strong> {customerData.nombre}</p>
+                                                    <p className="font-bold"><strong className="font-black text-slate-950">Email:</strong> {customerData.email}</p>
+                                                    <p className="font-bold"><strong className="font-black text-slate-950">Dirección:</strong> {customerData.direccion}</p>
+                                                    <p className="font-bold"><strong className="font-black text-slate-950">Teléfono:</strong> {customerData.telefono}</p>
+                                                    <p className="font-bold"><strong className="font-black text-slate-950">Medio Pago:</strong> {customerData.metodoPago} (Terminada en {customerData.tarjetaNumero.slice(-4)})</p>
+                                                </div>
+
+                                                <div className="space-y-3 py-2">
+                                                    <div className="grid grid-cols-12 font-black text-slate-950 border-b-2 border-stone-200 pb-2">
+                                                        <span className="col-span-6">Producto</span>
+                                                        <span className="col-span-2 text-center">Cant.</span>
+                                                        <span className="col-span-2 text-right">P. Unit</span>
+                                                        <span className="col-span-2 text-right">Subtotal</span>
+                                                    </div>
+                                                    
+                                                    {cart.map((item, index) => (
+                                                        <div key={index} className="grid grid-cols-12 text-slate-950 font-bold border-b border-stone-100 pb-2">
+                                                            <div className="col-span-6 flex flex-col">
+                                                                <span className="font-black text-slate-950 font-sans text-base">{item.nombre}</span>
+                                                                {item.sabor && <span className="text-xs text-terracotta font-black">Sabor: {item.sabor}</span>}
+                                                            </div>
+                                                            <span className="col-span-2 text-center">{item.cantidad}</span>
+                                                            <span className="col-span-2 text-right">${item.precio.toLocaleString('es-AR')}</span>
+                                                            <span className="col-span-2 text-right">${(item.precio * item.cantidad).toLocaleString('es-AR')}</span>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
+                                                <div className="flex justify-end pt-2">
+                                                    <div className="w-72 space-y-2 text-right font-bold text-slate-950">
+                                                        <div className="flex justify-between">
+                                                            <span>Subtotal Neto:</span>
+                                                            <span>${subtotal.toLocaleString('es-AR')}</span>
+                                                        </div>
+                                                        <div className="flex justify-between">
+                                                            <span>Costo de Despacho:</span>
+                                                            <span>
+                                                                {costoEnvio === 0 ? '$0 (Bonificado)' : `$${costoEnvio.toLocaleString('es-AR')}`}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex justify-between text-base font-black text-oliveDeep pt-2 border-t-2 border-stone-200">
+                                                            <span>TOTAL DEBITADO:</span>
+                                                            <span>${totalCompra.toLocaleString('es-AR')}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Código QR ficticio de AFIP de alta legibilidad */}
+                                                <div className="flex items-center gap-4 pt-4 border-t-2 border-stone-200 text-xs text-slate-800 font-bold leading-normal">
+                                                    <div className="w-14 h-14 bg-black p-0.5 flex items-center justify-center flex-shrink-0">
+                                                        <div className="w-full h-full bg-white flex items-center justify-center font-sans font-black text-slate-950 text-xs border border-slate-900 text-center">
+                                                            QR AFIP
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p>Comprobante de transacción electrónica aprobada por AFIP.</p>
+                                                        <p>NutriCrisp S.A. Córdoba Capital. República Argentina.</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div className="flex gap-4">
+                                                <button 
+                                                    onClick={() => window.print()}
+                                                    className="flex-1 bg-stone-100 hover:bg-stone-200 text-slate-950 py-3.5 rounded-xl font-black text-sm tracking-wide transition-colors flex items-center justify-center gap-2 border-2 border-stone-300"
+                                                >
+                                                    <i className="fa-solid fa-print text-base"></i> Imprimir Factura
+                                                </button>
+                                                <button 
+                                                    onClick={handleFinishProcess}
+                                                    className="flex-1 bg-oliveDeep hover:bg-oliveMedium text-white py-3.5 rounded-xl font-black tracking-wide transition-all uppercase text-sm shadow-md"
+                                                >
+                                                    Finalizar
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                )}
+
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
