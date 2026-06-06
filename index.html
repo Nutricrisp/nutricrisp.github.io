@@ -460,6 +460,8 @@
                                 <li><a href="#diferencial" className="hover:text-terracotta transition-colors py-2 block">Diferencial</a></li>
                                 <li><a href="#tienda" className="hover:text-terracotta transition-colors py-2 block">Tienda</a></li>
                                 <li><a href="#contacto" className="hover:text-terracotta transition-colors py-2 block">Contacto</a></li>
+                                <li><a href="#login" className="flex items-center space-x-2 hover:text-terracotta transition-colors py-2">
+                                    <i className="fa-solid fa-user text-lg"></i><span className="font-bold">Ingresar</span></a></li>
                             </ul>
 
                             <button 
@@ -823,6 +825,20 @@
                             )}
                         </div>
                     </section>
+            
+            {/* --- inicio sesión --- */}
+                    <section id="login" className="py-20 bg-stone-100">
+                        <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-xl">
+                            <h2 className="text-2xl font-black text-oliveDeep mb-6">Iniciar Sesión</h2>
+                            <form className="space-y-4">
+                                <input type="email" placeholder="Correo electrónico" className="w-full p-3 border rounded-lg" required />
+                                <input type="password" placeholder="Contraseña" className="w-full p-3 border rounded-lg" required />
+                                <button type="submit" className="w-full bg-terracotta text-white py-3 rounded-lg font-bold">
+                                    Entrar
+                                    </button>
+                                    </form>
+                                    </div>
+                                    </section>
 
                     {/* --- FOOTER --- */}
                     <footer className="bg-oliveDeep text-white border-t border-stone-800 py-12 px-4 sm:px-6 lg:px-8 text-center">
