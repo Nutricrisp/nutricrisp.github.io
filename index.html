@@ -92,7 +92,7 @@
                 id: 1,
                 nombre: 'Barritas Proteicas',
                 presentacion: 'Caja x12 unidades',
-                precio: 17000,
+                precio: 35000,
                 categoria: 'snacks',
                 sabores: ['Chocolate', 'Frutos Rojos', 'Coco'],
                 descripcion: 'Alto contenido de proteínas de rápida absorción. Ideal pre y post-entrenamiento.',
@@ -111,7 +111,7 @@
                 categoria: 'Snacks',
                 sabores: ['Arándano', 'limon', 'Chocolate'],
                 descripcion: 'Snack crocante. Una alternativa deliciosa para recargar energías.',
-                macros: '15g Proteína | Dulces y deliciosos',
+                macros: '10g Proteína | Dulces y deliciosos',
                 imagenes: [
                     'ChatGPT Image 2 jun 2026, 21_53_30.png',
                     'ChatGPT Image 2 jun 2026, 21_47_35.png',
@@ -126,7 +126,7 @@
                 precio: 14000,
                 categoria: 'Desayuno',
                 descripcion: 'Combinación perfecta de copos, frutos secos y proteína vegetal. Extra crunchy.',
-                macros: '15g Proteína | Fibra natural',
+                macros: '12g Proteína | Fibra natural',
                 imagenes: ['ChatGPT Image 2 jun 2026, 22_23_15.png '],
                 popular: true
             },
@@ -138,7 +138,7 @@
                 categoria: 'Snacks',
                  sabores: ['Cafe moka', 'Dulce de leche', 'Chocolate'],
                 descripcion: 'Esponjosos, húmedos y cargados de nutrientes de alta calidad alimentaria.',
-                macros: '15g Proteína | Endulzado natural',
+                macros: '8g Proteína | Endulzado natural',
                 imagenes: [
                     'ChatGPT Image 2 jun 2026, 22_35_06.png',
                     'ChatGPT Image 3 jun 2026, 13_04_12.png',
@@ -152,7 +152,7 @@
                 precio: 13000,
                 categoria: 'Snacks',
                 descripcion: 'El permitido perfecto para chocolate-lovers sin culpa. Textura fudge increíble.',
-                macros: '15g Proteína | Bajo en carbohidratos',
+                macros: '14g Proteína | Bajo en carbohidratos',
                 imagenes: ['ChatGPT Image 3 jun 2026, 13_16_25.png'],
                 popular: true
             },
@@ -163,7 +163,7 @@
                 precio: 14000,
                 categoria: 'Desayuno',
                 descripcion: 'Selección de nueces, almendras, castañas y semillas activadas para energía sostenida.',
-                macros: ' Grasas saludables | Vitaminas',
+                macros: 'Ácidos grasos saludables | Vitaminas',
                 imagenes: ['ChatGPT Image 3 jun 2026, 13_23_09.png'],
                 popular: false
             }
@@ -459,11 +459,13 @@
                                 <li><a href="#productos" className="hover:text-terracotta transition-colors py-2 block">Productos</a></li>
                                 <li><a href="#diferencial" className="hover:text-terracotta transition-colors py-2 block">Diferencial</a></li>
                                 <li><a href="#tienda" className="hover:text-terracotta transition-colors py-2 block">Tienda</a></li>
-                                <li><a href="#contacto" className="hover:text-terracotta transition-colors py-2 block">Contacto</a></li>
+                                <li><a href="#contacto" className="hover:text-terracotta transition-colors py-2 block">Contacto</a></li>   
                                 <li><a href="#login" className="flex items-center space-x-2 hover:text-terracotta transition-colors py-2">
                                     <i className="fa-solid fa-user text-lg"></i><span className="font-bold">Ingresar</span></a></li>
+                                
                                 <li><a href="#nosotros" className="hover:text-terracotta transition-colors py-2 block">Nosotros</a></li>
-        
+                                
+
                             </ul>
 
                             <button 
@@ -551,7 +553,7 @@
                                         <i className="fa-solid fa-person-running text-terracotta"></i>
                                     </div>
                                     <h3 className="text-xl font-extrabold text-oliveDeep mb-3">Estilo de vida activo</h3>
-                                    <p className="text-slate-950 text-base font-semibold leading-relaxed">Envases portátiles y prácticos diseñados para acompañarte en tu rutina de entrenamiento y vida en movimiento.</p>
+                                    <p className="text-slate-950 text-base font-semibold leading-relaxed">Envases prácticos diseñados para acompañarte en tu rutina de entrenamiento y vida en movimiento.</p>
                                 </div>
                             </div>
                         </div>
@@ -625,7 +627,7 @@
                             <h2 className="text-3xl sm:text-4xl font-black text-oliveDeep mt-2 mb-8">Nuestro Diferencial</h2>
                             <div className="bg-nutriBg border-2 border-stone-200 p-8 sm:p-12 rounded-3xl shadow-md text-slate-900 leading-relaxed max-w-4xl mx-auto space-y-6">
                                 <p className="text-xl font-bold leading-relaxed">
-                                    "Mientras muchos productos del mercado no consideran las necesidades de personas con restricciones alimentarias, <strong className="text-oliveDeep font-black">NutriCrisp</strong> combina nutrición deportiva de alto rendimiento con fórmulas aptas para personas con celiaquismo y sensibilidad al gluten."
+                                    "Mientras muchos alimentos nutritivos del mercado no consideran las necesidades de personas con restricciones alimentarias, <strong className="text-oliveDeep font-black">NutriCrisp</strong> combina nutrición deportiva de alto rendimiento con fórmulas aptas para personas con celiaquismo y sensibilidad al gluten."
                                 </p>
                                 <p className="text-lg text-slate-850 font-semibold">
                                     Creemos que el acceso a una alimentación deportiva segura y nutritiva debe estar al alcance de todos, sin sacrificar sabor, calidad ni resultados.
@@ -765,8 +767,8 @@
                             </div>
                         </div>
                     </section>
-            <section id="nosotros" className="py-20 bg-white">
-                        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <section id="nosotros" className="py-20 bg-white">
+                        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg::lg:px-8">
                             <h2 className="text-4xl font-black text-oliveDeep text-center mb-16">Nosotros</h2>
                             {/* Contenedor de Misión, Visión y Valores */}
                             <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -812,6 +814,7 @@
                                                             </div>
                                                             </section>
 
+                   
                     {/* --- SECCIÓN CONTACTO --- */}
                     {}
                     <section id="contacto" className="py-24 px-4 sm:px-6 lg:px-8 bg-oliveLight">
@@ -873,7 +876,6 @@
                             )}
                         </div>
                     </section>
-            
                 {/* --- inicio sesión --- */}
                     <section id="login" className="py-20 bg-stone-100">
                         <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-xl">
@@ -909,7 +911,9 @@
                                                 </button>
                                                 </dialog>
                                                 </section>
+            
                     {/* --- FOOTER --- */}
+
                     <footer className="bg-oliveDeep text-white border-t border-stone-800 py-12 px-4 sm:px-6 lg:px-8 text-center">
                         <div className="max-w-7xl mx-auto space-y-6">
                             <h3 className="text-2xl font-black text-white tracking-tight">Nutri<span className="text-terracotta">Crisp</span></h3>
